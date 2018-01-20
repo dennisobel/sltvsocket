@@ -14,7 +14,7 @@ var cors = require('cors');
 app.use(cors());
 
 app.use(function(req,res,next){
-    var allowedOrigins = ["http://localhost:8100","http://localhost:8101","http://localhost:8080/cart/createcart","http://localhost:8080/cart/getcart",'http://localhost:8080/api/auth/protected','http://localhost:8080/api/auth/register','http://localhost:8080/api/auth/login'];
+    var allowedOrigins = ["http://localhost:8100","http://localhost:8101","https://sltvsocket.herokuapp.com/","http://localhost:8080/cart/createcart","http://localhost:8080/cart/getcart",'http://localhost:8080/api/auth/protected','http://localhost:8080/api/auth/register','http://localhost:8080/api/auth/login'];
     var origin = req.headers.origin;
     if(allowedOrigins.indexOf(origin) > -1){
         res.setHeader("Access-Control-Allow-Origin", origin);
