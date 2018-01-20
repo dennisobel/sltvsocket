@@ -1,0 +1,25 @@
+{
+  "name": "sltvsocket",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+    "dependencies": {
+      "express": "^4.15.3",
+      "mongodb": "^2.2.33",
+      "mongoose": "^4.6.3",
+      "socket.io": "^2.0.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dennisobel/sltvsocket.git"
+  },
+  "author": "Dennis Obel",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dennisobel/sltvsocket/issues"
+  },
+  "homepage": "https://github.com/dennisobel/sltvsocket#readme"
+}
