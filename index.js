@@ -1,8 +1,9 @@
 var express = require('express');
 var app = express();
 var server = require('http').createServer(app);
-var socketio = require('socket.io');
-var io = socketio().listen(server);
+// var socketio = require('socket.io');
+// var io = socketio().listen(server);
+var io = require("socket.io").listen(server)
 
 // var mongoose = require("mongoose")
 // var MongoClient = require('mongodb').MongoClient;
@@ -12,6 +13,8 @@ var isequal = true;
 var cors = require('cors');
 
 app.use(cors());
+
+
 
 app.use(function(req,res,next){
     var allowedOrigins = ["http://localhost:8100","http://localhost:8101","https://sltvsocket.herokuapp.com/","http://localhost:8080/cart/createcart","http://localhost:8080/cart/getcart",'http://localhost:8080/api/auth/protected','http://localhost:8080/api/auth/register','http://localhost:8080/api/auth/login'];
@@ -24,6 +27,10 @@ app.use(function(req,res,next){
     res.header("Access-Control-Allow-Credentials", true);
     return next();
 })
+
+
+var allowedOrigins = ["http://localhost:8100","http://localhost:8101","https://sltvsocket.herokuapp.com/","http://localhost:8080/cart/createcart","http://localhost:8080/cart/getcart",'http://localhost:8080/api/auth/protected','http://localhost:8080/api/auth/register','http://localhost:8080/api/auth/login'];
+io.set("origins",allowedOrigins)
 
 io.on('connection',function(socket){
 	socket.emit("connected",clients)
