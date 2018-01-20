@@ -9,6 +9,21 @@ var MongoClient = require('mongodb').MongoClient;
 var db
 var clients = {};
 var isequal = true;
+var cors = require('cors');
+
+app.use(cors());
+
+app.use(function(req,res,next){
+    var allowedOrigins = ["http://localhost:8100","http://localhost:8101","http://localhost:8080/cart/createcart","http://localhost:8080/cart/getcart",'http://localhost:8080/api/auth/protected','http://localhost:8080/api/auth/register','http://localhost:8080/api/auth/login'];
+    var origin = req.headers.origin;
+    if(allowedOrigins.indexOf(origin) > -1){
+        res.setHeader("Access-Control-Allow-Origin", origin);
+    }
+	res.setHeader("Access-Control-Allow-Methods", "POST, PUT, OPTIONS, DELETE, GET");    
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    res.header("Access-Control-Allow-Credentials", true);
+    return next();
+})
 
 io.on('connection',function(socket){
 	socket.emit("connected",clients)
