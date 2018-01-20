@@ -71,6 +71,6 @@ io.on('connection',function(socket){
 
 var port = process.env.PORT || 8000;
 
-server.listen(process.env.PORT || 8000,function(){
-	console.log("listening in http://localhost:",port);
+server.listen(port,function(){
+	console.log("listening in http://localhost:" + port);
 })
