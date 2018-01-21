@@ -1,33 +1,47 @@
-var app = require('express')();
-//var app = express();
-var server = require('http').createServer(app);
+var express = require('express')();
+var app = express();
+//var server = require('http').createServer(app);
 // var socketio = require('socket.io');
 // var io = socketio().listen(server);
-var io = require("socket.io")(server);
-
 // var mongoose = require("mongoose")
 // var MongoClient = require('mongodb').MongoClient;
+
+var port = process.env.PORT || 8000;
+
+var server = app.listen(cross.NormalizePort(port))
+var io = require("socket.io").listen(server,{
+	log: false,
+	agent: false,
+	origins:"*:*",
+	transports:['websocket', 'htmlfile', 'xhr-polling', 'jsonp-polling', 'polling']
+});
+
+
 var db
 var clients = {};
 var isequal = true;
-//var cors = require('cors');
+var cors = require('cors');
 
-// app.use(cors());
-// app.use(function(req,res,next){
-//     var allowedOrigins = ["http://localhost:8100","http://localhost:8101","https://sltvsocket.herokuapp.com/","http://localhost:8080/cart/createcart","http://localhost:8080/cart/getcart",'http://localhost:8080/api/auth/protected','http://localhost:8080/api/auth/register','http://localhost:8080/api/auth/login'];
-//     var origin = req.headers.origin;
-//     if(allowedOrigins.indexOf(origin) > -1){
-//         res.setHeader("Access-Control-Allow-Origin", origin);
-//     }
-// 	res.setHeader("Access-Control-Allow-Methods", "POST, PUT, OPTIONS, DELETE, GET");    
-//     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-//     res.header("Access-Control-Allow-Credentials", true);
-//     return next();
-// })
+app.use(cors());
+app.use(function(req,res,next){
+    var allowedOrigins = ["http://localhost:8100","http://localhost:8101","https://sltvsocket.herokuapp.com/","http://localhost:8080/cart/createcart","http://localhost:8080/cart/getcart",'http://localhost:8080/api/auth/protected','http://localhost:8080/api/auth/register','http://localhost:8080/api/auth/login'];
+    var origin = req.headers.origin;
+    // if(allowedOrigins.indexOf(origin) > -1){
+    //     res.setHeader("Access-Control-Allow-Origin", origin);
+    // }
+    res.header("Access-Control-Allow-Origin", "*")
+	//res.setHeader("Access-Control-Allow-Methods", "POST, PUT, OPTIONS, DELETE, GET");    
+	res.header("Access-Control-Allow-Methods", "POST, PUT, OPTIONS, DELETE, GET, PATCH");    
+    //res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    res.header('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+    //res.header("Access-Control-Allow-Credentials", true);
+    res.setHeader('Access-Control-Allow-Credentials', false);
+    next();
+})
 
 
-var allowedOrigins = ["http://localhost:8100","http://localhost:8101","https://sltvsocket.herokuapp.com/","http://localhost:8080/cart/createcart","http://localhost:8080/cart/getcart",'http://localhost:8080/api/auth/protected','http://localhost:8080/api/auth/register','http://localhost:8080/api/auth/login'];
-io.origins(allowedOrigins)
+// var allowedOrigins = ["http://localhost:8100","http://localhost:8101","https://sltvsocket.herokuapp.com/","http://localhost:8080/cart/createcart","http://localhost:8080/cart/getcart",'http://localhost:8080/api/auth/protected','http://localhost:8080/api/auth/register','http://localhost:8080/api/auth/login'];
+// io.origins(allowedOrigins)
 
 io.on('connection',function(socket){
 	socket.emit("connected",clients)
@@ -73,7 +87,7 @@ io.on('connection',function(socket){
 	});
 })
 
-var port = process.env.PORT || 8000;
+
 
 server.listen(port,function(){
 	console.log("listening in http://localhost:" + port);
