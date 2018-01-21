@@ -6,7 +6,7 @@ var server = require('http').createServer(app);
 // var mongoose = require("mongoose")
 // var MongoClient = require('mongodb').MongoClient;
 
-var port = process.env.PORT || 8000;
+//var port = process.env.PORT || 8000;
 
 //var server = app.listen(cross.NormalizePort(port))
 // var io = require("socket.io").listen(server,{
@@ -89,8 +89,8 @@ io.on('connection',function(socket){
 
 
 
-server.listen(port,function(){
-	console.log("listening in http://localhost:" + port);
+server.listen(process.env.PORT || 5000,function(){
+	console.log(process.env.PORT);
 })
 
 
