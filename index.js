@@ -1,20 +1,20 @@
-var express = require('express')();
-var app = express();
-//var server = require('http').createServer(app);
-// var socketio = require('socket.io');
-// var io = socketio().listen(server);
+var app = require('express')();
+//var app = express();
+var server = require('http').createServer(app);
+ var socketio = require('socket.io');
+ var io = socketio().listen(server);
 // var mongoose = require("mongoose")
 // var MongoClient = require('mongodb').MongoClient;
 
 var port = process.env.PORT || 8000;
 
-var server = app.listen(cross.NormalizePort(port))
-var io = require("socket.io").listen(server,{
-	log: false,
-	agent: false,
-	origins:"*:*",
-	transports:['websocket', 'htmlfile', 'xhr-polling', 'jsonp-polling', 'polling']
-});
+//var server = app.listen(cross.NormalizePort(port))
+// var io = require("socket.io").listen(server,{
+// 	log: false,
+// 	agent: false,
+// 	origins:"*:*",
+// 	transports:['websocket', 'htmlfile', 'xhr-polling', 'jsonp-polling', 'polling']
+// });
 
 
 var db
@@ -29,7 +29,7 @@ app.use(function(req,res,next){
     // if(allowedOrigins.indexOf(origin) > -1){
     //     res.setHeader("Access-Control-Allow-Origin", origin);
     // }
-    res.header("Access-Control-Allow-Origin", "*")
+    res.header("Access-Control-Allow-Origin", origin)
 	//res.setHeader("Access-Control-Allow-Methods", "POST, PUT, OPTIONS, DELETE, GET");    
 	res.header("Access-Control-Allow-Methods", "POST, PUT, OPTIONS, DELETE, GET, PATCH");    
     //res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
@@ -40,8 +40,8 @@ app.use(function(req,res,next){
 })
 
 
-// var allowedOrigins = ["http://localhost:8100","http://localhost:8101","https://sltvsocket.herokuapp.com/","http://localhost:8080/cart/createcart","http://localhost:8080/cart/getcart",'http://localhost:8080/api/auth/protected','http://localhost:8080/api/auth/register','http://localhost:8080/api/auth/login'];
-// io.origins(allowedOrigins)
+//var allowedOrigins = ["http://localhost:8100","http://localhost:8101","https://sltvsocket.herokuapp.com/"];
+io.origins(["http://localhost:8100","http://localhost:8101","https://sltvsocket.herokuapp.com/"])
 
 io.on('connection',function(socket){
 	socket.emit("connected",clients)
